@@ -11,18 +11,18 @@ public class App {
         Scanner sc = new Scanner(System.in); //criar o scanner que vai ajudar a pedir ao utilizador todos os valores
 
         ArrayList<Carteira> carteiras= new ArrayList<>();  //criar a lista que vai guardar as carteiras
-        ArrayList<Criptomoeda> criptomoedas = new ArrayList<>(); //criar a lista que vai guardar as criptomoedas
+        ArrayList<CriptoMoeda> criptomoedas = new ArrayList<>(); //criar a lista que vai guardar as criptomoedas
 
-        Criptomoeda bit = new Criptomoeda("Bitcoin", "BTC", 75000);  //cria a criptomoeda Bitcoin
+        CriptoMoeda bit = new CriptoMoeda("Bitcoin", "BTC", 75000.0);  //cria a criptomoeda Bitcoin
         criptomoedas.add(bit);        //adiciona a criptomoeda Bitcoin à ArrayList
 
 
-        Criptomoeda eth = new Criptomoeda("Ethereum", "ETH", 2000); //cria criptomoeda Ethereum
+        CriptoMoeda eth = new CriptoMoeda("Ethereum", "ETH", 2000.0); //cria criptomoeda Ethereum
         criptomoedas.add(eth);        //adiciona a criptomoeda Ethereum à ArrayList
 
 
-        Criptomoeda sol = new Criptomoeda("Solana", "SOL",68.70);   //cria a criptomoeda Solana
-        criptomeodas.add(sol);       //Adiciona a criptomoeda Solana à ArrayList
+        CriptoMoeda sol = new CriptoMoeda("Solana", "SOL",68.70);   //cria a criptomoeda Solana
+        criptomoedas.add(sol);       //adiciona a criptomoeda Solana à ArrayList
 
         while (true){
             //Dar print ao menu

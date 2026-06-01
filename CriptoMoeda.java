@@ -1,5 +1,5 @@
 public class CriptoMoeda {
-    private String bit;
+    private String cripto;
     private String simbolo;
     private Double preco;
 
@@ -34,7 +34,7 @@ public class CriptoMoeda {
     public void setPreco(Double preco){
         this.preco = preco;
     }
-    
+
 
 
 }
