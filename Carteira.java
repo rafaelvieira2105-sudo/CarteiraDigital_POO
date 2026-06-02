@@ -43,21 +43,25 @@ public class Carteira {
     }
 
     public boolean levantar(Double valor){   //metodo para levantar 
-        if (valor > saldo){
+        if (valor > saldo){                     //verificar se o valor é maior que o saldo
             return false;
         }else{
-            this.saldo = this.saldo - valor;
+            this.saldo = this.saldo - valor;        //alterar o conteúdo do saldo
             return true;
         }
     }
 
 
-    public void comprarCripto(CarteiraCripto cc){
+    public void comprarCripto(CarteiraCripto cc){       //método para adicionar a cripo à carteira
         cripto.add(cc);
     }
 
+    public void venderCripto(CarteiraCripto cc){        //método para remover a cripto à carteira
+        cripto.remove(cc);
+    }
 
-    public ArrayList<CarteiraCripto> getCripto(){
+
+    public ArrayList<CarteiraCripto> getCripto(){       //retorna a lista de criptomoedas da carteira
         return cripto;
     }
 

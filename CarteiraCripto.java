@@ -22,6 +22,6 @@ public class CarteiraCripto {
     }
 
     public void setQuantidade(Double quantidade){
-        this.quantiade = quantidade;
+        this.quantidade = quantidade;
     }
 }
