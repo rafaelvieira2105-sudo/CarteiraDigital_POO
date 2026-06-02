@@ -1,9 +1,12 @@
+import java.util.ArrayList;
+
+
 
 public class Carteira {
     private String dono;    //cria variável dono
     private String nome;    // cria variável nome
     private Double saldo;   //cria a variável saldo
-
+    private ArrayList<CarteiraCripto> cripto = new ArrayList<>();
 
     public Carteira(String dono, String nome, Double saldo){   //construtor da classe carteira
         this.dono = dono;
@@ -47,4 +50,10 @@ public class Carteira {
             return true;
         }
     }
+
+
+    public void comprarCripto(CarteiraCripto cc){
+        cripto.add(cc);
+    }
+
 }

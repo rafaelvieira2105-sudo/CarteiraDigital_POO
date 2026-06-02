@@ -32,7 +32,7 @@ public class App {
             System.out.println("2. Listar Carteiras");
             System.out.println("3. Depositar");
             System.out.println("4. Levantar");
-            System.out.println("5. Sair");
+            System.out.println("5. Comprar CriptoMoeda");
 
             System.out.print("Escolha uma opção : ");
             int opcao = sc.nextInt();                   //Criar a variavel opcao que vai levar o utilizador ao resto das operações
@@ -98,8 +98,38 @@ public class App {
                     System.out.println("Saldo insuficiente!");
                 }
 
-            }else{
-                break;   //este é a opção 'sair' que acaba com o programa
+            }else if(opcao ==5){
+                for(int i = 0; i < carteiras.size(); i++){
+                    System.out.println(i+ " - "+carteiras.get(i).getNome());
+
+                }
+                
+
+                System.out.print("Escolha a carteira : ");
+                int numCarteira = sc.nextInt();
+                sc.nextLine();
+
+                Carteira escolhida = carteiras.get(numCarteira);
+
+                for(CriptoMoeda criptomoeda : criptomoedas){
+                    System.out.println(criptomoedas.indexOf(criptomoeda)+" - "+criptomoeda.getCripto()+" ("+criptomoeda.getSimbolo()+") -> "+criptomoeda.getPreco()+" €");
+                }
+
+                System.out.print("Escolha a criptomoeda : ");
+                int escolhacripto = sc.nextInt();
+                sc.nextLine();
+
+
+
+                CriptoMoeda moedaEscolhida = criptomoedas.get(escolhacripto);
+
+                System.out.print("Escolha a quantidade : ");
+                Double quantidade = sc.nextDouble();
+
+                CarteiraCripto cc = new CarteiraCripto(moedaEscolhida, quantidade);
+                escolhida.comprarCripto(cc);
+
+                System.out.println("Compra feita com sucesso!");
             }
         }
     
