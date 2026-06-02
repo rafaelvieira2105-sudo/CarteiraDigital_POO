@@ -56,4 +56,9 @@ public class Carteira {
         cripto.add(cc);
     }
 
+
+    public ArrayList<CarteiraCripto> getCripto(){
+        return cripto;
+    }
+
 }

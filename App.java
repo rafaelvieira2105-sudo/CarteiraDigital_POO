@@ -33,6 +33,7 @@ public class App {
             System.out.println("3. Depositar");
             System.out.println("4. Levantar");
             System.out.println("5. Comprar CriptoMoeda");
+            System.out.println("6. Ver Criptomoedas ");
 
             System.out.print("Escolha uma opção : ");
             int opcao = sc.nextInt();                   //Criar a variavel opcao que vai levar o utilizador ao resto das operações
@@ -98,12 +99,48 @@ public class App {
                     System.out.println("Saldo insuficiente!");
                 }
 
-            }else if(opcao ==5){
+            }else if(opcao ==5){        //opção de comprar criptomoedas
                 for(int i = 0; i < carteiras.size(); i++){
-                    System.out.println(i+ " - "+carteiras.get(i).getNome());
-
+                    System.out.println(i+ " - "+carteiras.get(i).getNome());            //lista as carteiras existentes
                 }
                 
+
+                System.out.print("Escolha a carteira : ");
+                int numCarteira = sc.nextInt();             //pede ao utilizador e guarda o número da carteira que escolheu
+                sc.nextLine();
+
+                Carteira escolhida = carteiras.get(numCarteira);            //Vai buscar o número da carteira escolhida
+
+                for(CriptoMoeda criptomoeda : criptomoedas){
+                    System.out.println(criptomoedas.indexOf(criptomoeda)+" - "+criptomoeda.getCripto()+" ("+criptomoeda.getSimbolo()+") -> "+criptomoeda.getPreco()+" €");  //lista as criptomoedas existentes e seus atributos
+                }
+
+                System.out.print("Escolha a criptomoeda : ");
+                int escolhacripto = sc.nextInt();                   //pede ao utilizador e guarda o número da criptomoeda que escolheu
+                sc.nextLine();
+
+
+
+                CriptoMoeda moedaEscolhida = criptomoedas.get(escolhacripto);               //Vai buscar a criptomoeda escolhida pelo utilizador
+
+                System.out.print("Escolha a quantidade : ");
+                Double quantidade = sc.nextDouble();                        //pede ao utilizador e guarda a quantidade da criptomoeda que o utilizador quer comprar
+
+                Double custo = moedaEscolhida.getPreco() * quantidade;                   //vai buscar o preço da criptomoeda e multiplica pela quantidade a comprar
+
+                if(custo > escolhida.getSaldo()){                               //Verifica se o custo que o utilizador que comprar de criptomoeda é maior que o saldo da conta
+                    System.out.println("Saldo insuficiente!");                  // caso seja, imprime esta mensagem
+                }else{                                                          //Caso o saldo seja suficiente faz o seguinte
+                    escolhida.levantar(custo);                                  //subtrai o valor a comprar da carteira escolida                    
+                    CarteiraCripto cc = new CarteiraCripto(moedaEscolhida, quantidade);
+                    escolhida.comprarCripto(cc);
+                    System.out.println("Compra feita com sucesso!");
+                }
+
+            }else if (opcao == 6){
+                for (int i = 0 ; i < carteiras.size(); i++){
+                    System.out.println(i+" - "+carteiras.get(i).getNome());
+                }
 
                 System.out.print("Escolha a carteira : ");
                 int numCarteira = sc.nextInt();
@@ -111,25 +148,10 @@ public class App {
 
                 Carteira escolhida = carteiras.get(numCarteira);
 
-                for(CriptoMoeda criptomoeda : criptomoedas){
-                    System.out.println(criptomoedas.indexOf(criptomoeda)+" - "+criptomoeda.getCripto()+" ("+criptomoeda.getSimbolo()+") -> "+criptomoeda.getPreco()+" €");
+                for(CarteiraCripto cc : escolhida.getCripto()){
+                    System.out.println(cc.getMoeda().getCripto()+" --> "+cc.getMoeda().getSimbolo()+" -->"+cc.getMoeda().getPreco()+" : "+cc.getQuantidade());
                 }
 
-                System.out.print("Escolha a criptomoeda : ");
-                int escolhacripto = sc.nextInt();
-                sc.nextLine();
-
-
-
-                CriptoMoeda moedaEscolhida = criptomoedas.get(escolhacripto);
-
-                System.out.print("Escolha a quantidade : ");
-                Double quantidade = sc.nextDouble();
-
-                CarteiraCripto cc = new CarteiraCripto(moedaEscolhida, quantidade);
-                escolhida.comprarCripto(cc);
-
-                System.out.println("Compra feita com sucesso!");
             }
         }
     
