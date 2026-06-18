@@ -1,8 +1,9 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
 
 
-public class Carteira {
+public class Carteira implements Serializable{
     private String dono;    //cria variável dono
     private String nome;    // cria variável nome
     private Double saldo;   //cria a variável saldo

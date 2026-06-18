@@ -1,12 +1,14 @@
 import javax.swing.*;
 import java.util.ArrayList;
 
+//classe da janela de registo
 public class Registo extends JFrame{
 
     ArrayList<Utilizador> utilizadores;
     ArrayList<Carteira> carteiras;
     ArrayList<CriptoMoeda> criptomoedas;
 
+    //cria os componentes visuais
     JLabel mail = new JLabel("Email : ");
     JTextField email = new JTextField();
     JLabel util = new JLabel("Utilizador : ");
@@ -19,6 +21,7 @@ public class Registo extends JFrame{
     JButton voltar = new JButton("Voltar");
 
 
+    //construtor da classe Registo
     public Registo(ArrayList<Utilizador> utilizadores, ArrayList<Carteira> carteiras, ArrayList<CriptoMoeda> criptomoedas){
         
         this.utilizadores = utilizadores;
@@ -52,6 +55,7 @@ public class Registo extends JFrame{
         add(registar);
         add(voltar);
 
+        //executa o b0otão voltar -> volta para o menu inicial
         voltar.addActionListener( e -> {
             MiniMenu mm = new MiniMenu(utilizadores, carteiras, criptomoedas);
             mm.setVisible(true);
@@ -59,6 +63,7 @@ public class Registo extends JFrame{
         });
 
 
+        //executa o botão registar -> lê e guarda valores e conteúdo do registo do utilizador
         registar.addActionListener( e -> {
             
             String emailTxt = email.getText();
@@ -74,7 +79,7 @@ public class Registo extends JFrame{
             if ( passwordTxt.equals(repetirTxt)){
                 Utilizador u = new Utilizador(emailTxt, utilizadorTxt, passwordTxt);
                 utilizadores.add(u);
-                MenuPrincipal menu = new MenuPrincipal(u.getCarteiras(), criptomoedas);
+                MenuPrincipal menu = new MenuPrincipal(u.getCarteiras(), criptomoedas, utilizadores);
                 menu.setVisible(true);
                 this.dispose();
             } else {

@@ -1,4 +1,7 @@
-public class CarteiraCripto {
+import java.io.Serializable;
+
+//classe que liga uma criptomoeda a uma carteira
+public class CarteiraCripto implements Serializable{
     private CriptoMoeda moeda;
     private Double quantidade;
 

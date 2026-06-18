@@ -1,6 +1,8 @@
 import java.util.ArrayList;
+import java.io.Serializable;
 
-public class Utilizador {
+//classe utilizador -> Armazena as credenciais do utilizador
+public class Utilizador implements Serializable{
     private String email;
     private String nomeUtilizador;
     private String password;

@@ -1,4 +1,7 @@
-public class CriptoMoeda {
+import java.io.Serializable;
+
+//classe que representa uma criptomoeda
+public class CriptoMoeda implements Serializable{
     private String cripto;
     private String simbolo;
     private Double preco;

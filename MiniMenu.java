@@ -1,7 +1,9 @@
 import javax.swing.*;
 import java.util.ArrayList;
 
+//classe do menu inicial de login/registo
 public class MiniMenu extends JFrame {
+    //cria os componentes visuais da janela
     JButton login = new JButton("Login");
     JButton registar = new JButton("Registar");
     JLabel titulo = new JLabel("Bem vindo ao SQUEBANK");
@@ -11,6 +13,7 @@ public class MiniMenu extends JFrame {
     ArrayList< CriptoMoeda> criptomoedas;
 
 
+    //construtor da classe MiniMenu
     public MiniMenu(ArrayList<Utilizador> utilizadores, ArrayList<Carteira> carteiras, ArrayList<CriptoMoeda> criptomoedas){
 
         this.utilizadores = utilizadores;
@@ -32,13 +35,14 @@ public class MiniMenu extends JFrame {
         add(registar);
         add(titulo);
 
+        //executa o botão registar -> lança a janela de registo 
         registar.addActionListener(e -> {
             Registo r = new Registo(utilizadores, carteiras, criptomoedas);
             r.setVisible(true);
             this.dispose();
         });
 
-
+        //executa o botão login -> lança a janela de login
         login.addActionListener(e ->{
             Login l = new Login(utilizadores, carteiras, criptomoedas);
             l.setVisible(true);
