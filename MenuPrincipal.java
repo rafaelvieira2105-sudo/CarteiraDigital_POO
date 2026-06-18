@@ -183,7 +183,7 @@ public class MenuPrincipal extends JFrame{
         //executa o botão levantar 
         btnLevantar.addActionListener(e->{
             //cria uma janela paralela ao menu principal
-            JDialog dialog = new JDialog(this, "Depositar", true);
+            JDialog dialog = new JDialog(this, "Levantar", true);
             dialog.setSize(300,200);
             dialog.setLayout(null);
 
@@ -356,7 +356,7 @@ public class MenuPrincipal extends JFrame{
             JComboBox<String> comboCarteira = new JComboBox<>();
             JComboBox<String> comboCripto = new JComboBox<>();
             JTextField quantidade = new JTextField();
-            JButton vender = new JButton("Comprar");
+            JButton vender = new JButton("Vender");
 
             escolherCarteira.setBounds(10, 20, 80, 25);
             comboCarteira.setBounds(100, 20, 170, 25);
@@ -417,58 +417,69 @@ public class MenuPrincipal extends JFrame{
 
 
         //executa o botão de Transferir
-        btnTransferir.addActionListener(e->{
-            //cria uma janela paralela ao menu principal
+        btnTransferir.addActionListener(e -> {
             JDialog dialog = new JDialog(this, "Transferir", true);
-            dialog.setSize(300,220);
+            dialog.setSize(300, 310);
             dialog.setLayout(null);
 
+            JLabel lblTipo = new JLabel("Tipo:");
+            JComboBox<String> tipoTransferencia = new JComboBox<>();
+            tipoTransferencia.addItem("Dinheiro");
+            tipoTransferencia.addItem("Criptomoeda");
 
+            JLabel lblOrigem = new JLabel("Origem:");
             JComboBox<String> comboOrigem = new JComboBox<>();
+            JLabel lblDestino = new JLabel("Destino:");
             JComboBox<String> comboDestino = new JComboBox<>();
+            JLabel lblCripto = new JLabel("Cripto:");
+            JComboBox<String> comboCripto = new JComboBox<>();
+            JLabel lblValor = new JLabel("Valor/Qtd:");
             JTextField valor = new JTextField();
             JButton transferir = new JButton("Transferir");
-            JLabel origem = new JLabel("Origem : ");
-            JLabel destino = new JLabel("Destino : ");
-            JLabel val = new JLabel("Valor :");
 
-            origem.setBounds(10, 20, 80, 25);
-            comboOrigem.setBounds(100, 20, 170, 25);
-            destino.setBounds(10, 60, 80, 25);
-            comboDestino.setBounds(100, 60, 170, 25);
-            val.setBounds(10, 100, 80, 25);
-            valor.setBounds(100, 100, 170, 25);
-            transferir.setBounds(90, 145, 110, 30);
+            lblTipo.setBounds(10, 15, 80, 25);
+            tipoTransferencia.setBounds(100, 15, 170, 25);
+            lblOrigem.setBounds(10, 50, 80, 25);
+            comboOrigem.setBounds(100, 50, 170, 25);
+            lblDestino.setBounds(10, 85, 80, 25);
+            comboDestino.setBounds(100, 85, 170, 25);
+            lblCripto.setBounds(10, 120, 80, 25);
+            comboCripto.setBounds(100, 120, 170, 25);
+            lblValor.setBounds(10, 155, 80, 25);
+            valor.setBounds(100, 155, 170, 25);
+            transferir.setBounds(90, 200, 110, 30);
 
-
-            dialog.add(origem);
+            dialog.add(lblTipo);
+            dialog.add(tipoTransferencia);
+            dialog.add(lblOrigem);
             dialog.add(comboOrigem);
-            dialog.add(destino);
+            dialog.add(lblDestino);
             dialog.add(comboDestino);
-            dialog.add(val);
+            dialog.add(lblCripto);
+            dialog.add(comboCripto);
+            dialog.add(lblValor);
             dialog.add(valor);
             dialog.add(transferir);
 
-            //corre e lista as carteiras existentes
             for(Carteira c : carteiras){
                 comboOrigem.addItem(c.getNome());
-            }
-
-            //corre e lista as carteiras existentes
-            for(Carteira c : carteiras){
                 comboDestino.addItem(c.getNome());
             }
 
-            //executa o botão transferir da janela -> verifica se a carteira de origem e de destino são diferentes e executa a transação entre carteiras
-            transferir.addActionListener(ev->{
-                if(comboOrigem.getSelectedIndex() == comboDestino.getSelectedIndex()){
-                    JOptionPane.showMessageDialog(null, "Conta Inválida");
-                } else {
-                    int indexOrigem = comboOrigem.getSelectedIndex();
-                    int indexDestino = comboDestino.getSelectedIndex();
+            for(CriptoMoeda cm : criptomoedas){
+                comboCripto.addItem(cm.getCripto());
+            }
 
-                    Carteira cOrigem = carteiras.get(indexOrigem);
-                    Carteira cDestino = carteiras.get(indexDestino);
+            transferir.addActionListener(ev -> {
+                if(comboOrigem.getSelectedIndex() == comboDestino.getSelectedIndex()){
+                    JOptionPane.showMessageDialog(null, "Conta Inválida!");
+                    return;
+                }
+
+                Carteira cOrigem = carteiras.get(comboOrigem.getSelectedIndex());
+                Carteira cDestino = carteiras.get(comboDestino.getSelectedIndex());
+
+                if(tipoTransferencia.getSelectedIndex() == 0){
                     Double valorTransferir = Double.parseDouble(valor.getText());
                     if(cOrigem.levantar(valorTransferir)){
                         cDestino.depositar(valorTransferir);
@@ -477,14 +488,28 @@ public class MenuPrincipal extends JFrame{
                     } else {
                         JOptionPane.showMessageDialog(null, "Saldo Insuficiente!");
                     }
-
+                } else {
+                    CriptoMoeda moedaEscolhida = criptomoedas.get(comboCripto.getSelectedIndex());
+                    Double qtd = Double.parseDouble(valor.getText());
+                    for(CarteiraCripto cc : cOrigem.getCripto()){
+                        if(cc.getMoeda().equals(moedaEscolhida)){
+                            if(qtd > cc.getQuantidade()){
+                                JOptionPane.showMessageDialog(null, "Quantidade insuficiente!");
+                            } else {
+                                cc.setQuantidade(cc.getQuantidade() - qtd);
+                                cDestino.comprarCripto(new CarteiraCripto(moedaEscolhida, qtd));
+                                JOptionPane.showMessageDialog(null, "Transferência de cripto efetuada!");
+                                dialog.dispose();
+                            }
+                        
+                            return;
+                        }
+                    }
+                    JOptionPane.showMessageDialog(null, "Cripto não encontrada na carteira!");
                 }
-
-
             });
 
             dialog.setVisible(true);
-
         });
 
 
